@@ -1,6 +1,7 @@
-import { FaTimes } from "react-icons/fa"
+import { FaTrash } from "react-icons/fa";
+
 import { useDispatch } from "react-redux"
-import { handleComplete } from "../features/tasksSlice"
+import { handleComplete, removeTask } from "../features/tasksSlice"
 
 const Task = ({ text, id, isCompleted }) => {
     const dispatch = useDispatch()
@@ -11,7 +12,7 @@ const Task = ({ text, id, isCompleted }) => {
               <button className={`${isCompleted ? 'line-through' : ''} flex items-center gap-x-1 text-lg lg:text-xl poppins-medium tracking-wider`} onClick={() => dispatch(handleComplete(id))}>
                   <input type="checkbox" checked={isCompleted} className="" />
                   <span>{text}</span> </button>
-                <button><FaTimes size={25} color="red" /></button>
+                <button className="flex items-center justify-center" type="button" onClick={() => dispatch(removeTask(id))}><FaTrash size={25} color="red" /></button>
               </div>
     </div>
   )

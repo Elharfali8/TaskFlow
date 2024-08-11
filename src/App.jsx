@@ -27,7 +27,7 @@ function App() {
       <div className="container mx-auto p-6 bg-[#ffffff] rounded-xl min-h-[80vh]">
         <div className="flex justify-between items-center flex-wrap mb-4 pb-1 border-b border-b-black">
           <p className="text-lg md:text-xl poppins-medium">
-            1/3 todos completed
+            {tasks.length > 0 && tasks?.filter((task) => task.isCompleted === true).length} {tasks.length > 0 && '/'} {tasks.length}  todos completed
           </p>
           <p className="flex items-center gap-x-1">
             <span className="text-lg md:text-xl poppins-semibold">Youssef</span>
@@ -35,7 +35,8 @@ function App() {
           </p>
         </div>
         <div className="grid lg:grid-cols-5 xl:grid-cols-7">
-          <div className=" lg:col-span-3 xl:col-span-4 py-2 md:py-3 lg:py-4">
+          {/* ---------- */}
+          <div className="lg:order-1  order-2 lg:col-span-3 xl:col-span-4 py-2 md:py-3 lg:py-4">
             <div className="mb-2 lg:mb-4">
               <p className="text-lg lg:text-xl tracking-wider text-[#333333] poppins-medium">{tasks  ? tasks.length : '0'} todos</p>
             </div>
@@ -55,17 +56,20 @@ function App() {
 
             
           </div>
-          <div className=" lg:col-span-2 xl:col-span-3 py-2 md:py-3 lg:py-4 px-2  flex flex-col justify-between min-h-[70vh]">
+          {/* ----------------- */}
+          <div className="lg:order-2  order-1 lg:col-span-2 xl:col-span-3 py-2 md:py-3 lg:py-4 px-2  flex flex-col justify-between lg:min-h-[70vh] lg:border-l lg:border-l-black">
             <TodoInput
               inputValue={inputValue}
+              setInputValue={setInputValue}
               handleInput={handleInput}
               handleAddTask={handleAddTask}
             />
-            <div className="grid place-items-center gap-y-1 lg:gap-y-2">
+            <div className="grid place-items-center gap-y-2 lg:gap-y-3 mt-6 lg:mt-0">
               <button className='w-full xl:max-w-[90%] bg-[#2196F3] text-[#ffffff] rounded-lg h-[32px] md:h-[34px] lg:h-[38px] text-lg  poppins-medium capitalize transition-all ease-in-out duration-150 hover:tracking-widest'>Login</button>
               <button className='w-full xl:max-w-[90%] bg-[#FF9800] text-[#ffffff] rounded-lg h-[32px] md:h-[34px] lg:h-[38px] text-lg  poppins-medium capitalize transition-all ease-in-out duration-150 hover:tracking-widest'>register</button>
             </div>
           </div>
+          {/* -------------- */}
         </div>
       </div>
     </main>

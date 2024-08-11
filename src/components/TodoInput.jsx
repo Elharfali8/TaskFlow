@@ -1,12 +1,13 @@
 import React from 'react'
 
-const TodoInput = ({ inputValue, handleInput, handleAddTask }) => {
+const TodoInput = ({ inputValue, setInputValue, handleInput, handleAddTask }) => {
     
   return (
       <form onSubmit={(e) => {
           e.preventDefault()
           handleAddTask(inputValue)
-      }} className='grid gap-y-1 lg:gap-y-2 place-items-center'>
+          setInputValue('')
+      }} className='grid gap-y-2 lg:gap-y-3 place-items-center'>
           <input
               type="text"
               placeholder='Add a todo'
