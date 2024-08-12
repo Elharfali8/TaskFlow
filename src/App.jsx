@@ -1,13 +1,15 @@
-import { CgProfile } from "react-icons/cg"
-import { TodoInput } from "./components"
+
+import { AuthDetails, Login, Register, TodoInput } from "./components"
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { addTask } from "./features/tasksSlice"
 import Task from "./components/Task"
 
 function App() {
-  const {tasks} = useSelector((store) => store.tasks)
+  const { tasks } = useSelector((store) => store.tasks)
   const [inputValue, setInputValue] = useState('')
+  const [registerIsOpen, setRegisterIsOpen] = useState(false)
+  const [loginIsOpen, setLoginIsOpen] = useState(false)
   const dispatch = useDispatch()
 
   const handleInput = (e) => {
@@ -19,20 +21,41 @@ function App() {
     dispatch(addTask(text))
   }
 
-  
+  const handleRegister = () => {
+    setRegisterIsOpen((prev) => !prev)
+  }
+
+  const handleLogin = () => {
+    setLoginIsOpen((prev) => !prev)
+  }
+
+  const handleBoth = () => {
+    setRegisterIsOpen((prev) => !prev)
+    setLoginIsOpen((prev) => !prev)
+}
   
 
   return (
     <main className="bg-[#f5f5f5] w-full min-h-[100vh] grid place-items-center px-4 lg:px-2 xl:px-0 ">
-      <div className="container mx-auto p-6 bg-[#ffffff] rounded-xl min-h-[80vh]">
+      <div className="container mx-auto p-6 bg-[#ffffff] rounded-xl min-h-[80vh] relative">
+        {registerIsOpen && (
+          <div className="absolute main-opacity inset-0 grid place-items-center z-[98]">
+             <Register handleRegister={handleRegister} handleBoth={handleBoth}  />
+          </div>
+        )}
+
+{loginIsOpen && (
+          <div className="absolute main-opacity inset-0 grid place-items-center z-[98]">
+             <Login handleLogin={handleLogin} handleBoth={handleBoth}  />
+          </div>
+        )}
+       
         <div className="flex justify-between items-center flex-wrap mb-4 pb-1 border-b border-b-black">
           <p className="text-lg md:text-xl poppins-medium">
             {tasks.length > 0 && tasks?.filter((task) => task.isCompleted === true).length} {tasks.length > 0 && '/'} {tasks.length}  todos completed
           </p>
-          <p className="flex items-center gap-x-1">
-            <span className="text-lg md:text-xl poppins-semibold">Youssef</span>
-            <span><CgProfile size={27} /></span>
-          </p>
+          {/* ------------- */}
+          <AuthDetails />
         </div>
         <div className="grid lg:grid-cols-5 xl:grid-cols-7">
           {/* ---------- */}
@@ -65,13 +88,14 @@ function App() {
               handleAddTask={handleAddTask}
             />
             <div className="grid place-items-center gap-y-2 lg:gap-y-3 mt-6 lg:mt-0">
-              <button className='w-full xl:max-w-[90%] bg-[#2196F3] text-[#ffffff] rounded-lg h-[32px] md:h-[34px] lg:h-[38px] text-lg  poppins-medium capitalize transition-all ease-in-out duration-150 hover:tracking-widest'>Login</button>
-              <button className='w-full xl:max-w-[90%] bg-[#FF9800] text-[#ffffff] rounded-lg h-[32px] md:h-[34px] lg:h-[38px] text-lg  poppins-medium capitalize transition-all ease-in-out duration-150 hover:tracking-widest'>register</button>
+              <button className='w-full xl:max-w-[90%] bg-[#2196F3] text-[#ffffff] rounded-lg h-[32px] md:h-[34px] lg:h-[38px] text-lg  poppins-medium capitalize transition-all ease-in-out duration-150 hover:tracking-widest' onClick={() => setLoginIsOpen(true)}>Login</button>
+              <button className='w-full xl:max-w-[90%] bg-[#FF9800] text-[#ffffff] rounded-lg h-[32px] md:h-[34px] lg:h-[38px] text-lg  poppins-medium capitalize transition-all ease-in-out duration-150 hover:tracking-widest' onClick={() => setRegisterIsOpen(true)}>register</button>
             </div>
           </div>
           {/* -------------- */}
         </div>
       </div>
+      
     </main>
   )
 }
